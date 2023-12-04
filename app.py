@@ -124,6 +124,8 @@ def mostrar_libros():
         conn.close()
 
 # Ruta para editar un libro
+
+
 @app.route('/editar_libro', methods=['POST'])
 def editar_libro():
     isbn_a_editar = request.form.get('nuevo_isbn')
@@ -139,7 +141,8 @@ def editar_libro():
         conn = get_db_connection()
         cursor = conn.cursor()
         print("Conexión a la base de datos exitosa")
-        print(nuevo_titulo, nuevo_autor, nuevo_isbn, nuevo_editorial, isbn_a_editar, nuevo_ejemplares, nuevo_genero, nueva_sinopsis, isbn_a_editar)
+        print(nuevo_titulo, nuevo_autor, nuevo_isbn, nuevo_editorial, isbn_a_editar,
+              nuevo_ejemplares, nuevo_genero, nueva_sinopsis, isbn_a_editar)
         query = "UPDATE libro SET titulo = %s, autor = %s, isbn = %s, editorial = %s, ejemplares = %s, genero = %s, sinopsis = %s WHERE isbn = %s"
         values = (nuevo_titulo, nuevo_autor, nuevo_isbn, nuevo_editorial,
                   nuevo_ejemplares, nuevo_genero, nueva_sinopsis, isbn_a_editar)
