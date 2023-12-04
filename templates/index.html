@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Mini Servidor Crear Cuentas Usuarios </title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Manrope:wght@200&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Logo o Marca</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Libros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#registroModal">Registrar
+                            Libros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Acerca de</a>
+                    </li>
+                    <!-- Puedes agregar más elementos del menú aquí -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FORMULARIO Cuenta -->
+
+    <div class="container text-center feature cuenta">
+        <!-- Modal -->
+        <div class="modal fade" id="registroModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registroModalLabel">Registro de Libro</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h1 class="mb-4">Formulario para Libro</h1>
+
+                        <form action="/registrar_libro" method="POST" id="registro-form" class="mb-3">
+
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label">Título:</label>
+                                <input type="text" id="titulo" name="titulo" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="autor" class="form-label">Autor:</label>
+                                <input type="text" id="autor" name="autor" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="isbn" class="form-label">ISBN:</label>
+                                <input type="text" id="isbn" name="isbn" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="editorial" class="form-label">Editorial:</label>
+                                <input type="text" id="editorial" name="editorial" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ejemplares" class="form-label">Ejemplares:</label>
+                                <input type="number" id="ejemplares" name="ejemplares" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="genero" class="form-label">Género:</label>
+                                <input type="text" id="genero" name="genero" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="sinopsis" class="form-label">Sinopsis:</label>
+                                <textarea id="sinopsis" name="sinopsis" class="form-control"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edición -->
+    <div class="modal fade" id="editarLibroModal" tabindex="-1" aria-labelledby="editarLibroModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarLibroModalLabel">Editar Libro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <h1 class="mb-4">Formulario para Edición de Libro</h1>
+
+                    <form id="editar-form">
+                        <div class="mb-3">
+                            <label for="tituloEditar" class="form-label">Título:</label>
+                            <input type="text" id="tituloEditar" name="tituloEditar" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="autorEditar" class="form-label">Autor:</label>
+                            <input type="text" id="autorEditar" name="autorEditar" class="form-control" required>
+                        </div>
+
+                        <input type="hidden" id="isbnOriginal" name="isbnOriginal">
+
+                        <div class="mb-3">
+                            <label for="isbnEditar" class="form-label">ISBN:</label>
+                            <input type="text" id="isbnEditar" name="isbnEditar" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editorialEditar" class="form-label">Editorial:</label>
+                            <input type="text" id="editorialEditar" name="editorialEditar" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ejemplaresEditar" class="form-label">Ejemplares:</label>
+                            <input type="number" id="ejemplaresEditar" name="ejemplaresEditar" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="generoEditar" class="form-label">Género:</label>
+                            <input type="text" id="generoEditar" name="generoEditar" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="sinopsisEditar" class="form-label">Sinopsis:</label>
+                            <textarea id="sinopsisEditar" name="sinopsisEditar" class="form-control"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        onclick="guardarCambios()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center feature cuenta">
+        <div class="row">
+            <h1>Libros en el Servidor</h1>
+            <button id="ver-libros-btn" class="btn btn-primary">Recargar Lista de Libros</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Título</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">ISBN</th>
+                        <th scope="col">Editorial</th>
+                        <th scope="col">Ejemplares</th>
+                        <th scope="col">Género</th>
+                        <th scope="col">Sinopsis</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="libros-table">
+                    <!-- Las filas de la tabla se generarán dinámicamente con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <footer class="bg-primary text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Información de Contacto</h4>
+                    <p>Dirección: Calle falsa 123</p>
+                    <p>Teléfono: 011-666-666</p>
+                    <p>Email: biblioteca@python.com </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+
+
+
+    <script>
+
+        function cargarListaDeLibros() {
+            $.ajax({
+                type: "GET",
+                url: "/libros",
+                success: function (response) {
+                    const libros = response.libros;
+                    console.log("Botón 'Ver Lista de Libros' clickeado");
+
+                    const tableBody = $("#libros-table");
+
+                    tableBody.empty();
+
+                    for (const libro of libros) {
+                        const row = $("<tr>");
+                        row.append($("<td>").text(libro.titulo));
+                        row.append($("<td>").text(libro.autor));
+                        row.append($("<td>").text(libro.isbn));
+                        row.append($("<td>").text(libro.editorial));
+                        row.append($("<td>").text(libro.ejemplares));
+                        row.append($("<td>").text(libro.genero));
+                        row.append($("<td>").text(libro.sinopsis));
+
+                        // Agregar botones de Editar y Eliminar
+                        const editButton = $("<button>").text("Editar").addClass("btn btn-warning btn-sm mx-1");
+                        const deleteButton = $("<button>").text("Eliminar").addClass("btn btn-danger btn-sm mx-1");
+
+                        editButton.click(function () {
+                            // Lógica para manejar la edición (abrir el modal de edición con los detalles del libro)
+                            $("#editarLibroModal").modal("show");
+                            $("#tituloEditar").val(libro.titulo);
+                            $("#autorEditar").val(libro.autor);
+                            $("#isbnEditar").val(libro.isbn);
+                            $("#editorialEditar").val(libro.editorial);
+                            $("#ejemplaresEditar").val(libro.ejemplares);
+                            $("#generoEditar").val(libro.genero);
+                            $("#sinopsisEditar").val(libro.sinopsis);
+                        });
+
+
+
+                        deleteButton.click(function () {
+                            // Lógica para manejar la eliminación
+                            const confirmarEliminacion = confirm("¿Estás seguro de que quieres eliminar el libro: " + libro.titulo + "?");
+
+                            if (confirmarEliminacion) {
+                                // Lógica para eliminar el libro (puedes realizar una llamada AJAX aquí)
+                                console.log("Eliminar libro: " + libro.titulo);
+
+                                // Agrega aquí la llamada AJAX para eliminar el libro del servidor
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/eliminar_libro",
+                                    data: { isbn: libro.isbn },  // Envía el ISBN del libro a eliminar
+                                    success: function (response) {
+                                        alert(response);  // Muestra una alerta con la respuesta del servidor
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.error("Error al eliminar el libro: " + error);
+                                    },
+                                });
+                            }
+                        });
+
+                        // Agregar botones a la fila
+                        const buttonCell = $("<td>").append(editButton).append(deleteButton);
+                        row.append(buttonCell);
+
+                        tableBody.append(row);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error al cargar la lista de libros: " + error);
+                },
+            });
+
+        }
+
+        function guardarCambios() {
+            console.log("Guardando cambios")
+            // Obtener el ISBN original
+            var isbnOriginal = $("#isbnOriginal").val();
+
+            // Obtener los nuevos valores del formulario de edición
+            var nuevo_titulo = $("#tituloEditar").val();
+            var nuevo_autor = $("#autorEditar").val();
+            var nuevo_isbn = $("#isbnEditar").val();
+            var nuevo_editorial = $("#editorialEditar").val();
+            var nuevo_ejemplares = $("#ejemplaresEditar").val();
+            var nuevo_genero = $("#generoEditar").val();
+            var nueva_sinopsis = $("#sinopsisEditar").val();
+
+            // Realizar la llamada AJAX para guardar cambios
+            $.ajax({
+                type: "POST",
+                url: "/editar_libro",
+                data: {
+                    isbn_a_editar: isbnOriginal,
+                    nuevo_titulo: nuevo_titulo,
+                    nuevo_autor: nuevo_autor,
+                    nuevo_isbn: nuevo_isbn,
+                    nuevo_editorial: nuevo_editorial,
+                    nuevo_ejemplares: nuevo_ejemplares,
+                    nuevo_genero: nuevo_genero,
+                    nueva_sinopsis: nueva_sinopsis
+                },
+                success: function (response) {
+                    alert(response); // Mostrar una alerta con la respuesta del servidor
+                    $("#editarLibroModal").modal("hide"); // Cerrar el modal después de guardar cambio
+                    window.location.reload();
+                    cargarListaDeLibros()
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error al guardar cambios: " + error);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $("#registro-form").on("submit", function (event) {
+                event.preventDefault();
+                console.log("Clic en Registrar");
+
+                $.ajax({
+                    type: "POST",
+                    url: "/registrar_libro",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        alert(response);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error: " + error);
+                    },
+                });
+            });
+
+
+
+            $(document).ready(function () {
+                cargarListaDeLibros()
+                $("#ver-libros-btn").click(function () {
+                    cargarListaDeLibros()
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
