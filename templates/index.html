@@ -310,6 +310,8 @@
                                     data: { isbn: libro.isbn },  // Envía el ISBN del libro a eliminar
                                     success: function (response) {
                                         alert(response);  // Muestra una alerta con la respuesta del servidor
+                                        window.location.reload();
+                                        cargarListaDeLibros()
                                     },
                                     error: function (xhr, status, error) {
                                         console.error("Error al eliminar el libro: " + error);
@@ -383,6 +385,8 @@
                     data: $(this).serialize(),
                     success: function (response) {
                         alert(response);
+                        window.location.reload();
+                        cargarListaDeLibros()
                     },
                     error: function (xhr, status, error) {
                         alert("Error: " + error);
